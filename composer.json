@@ -1,0 +1,43 @@
+{
+    "name": "templete/templete",
+    "description": "",
+    "authors": [
+        {
+            "name": "Martin Nganga",
+            "email": "ngangamartin11@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "symfony/dotenv": "^4.3",
+        "ext-json": "*",
+        "ext-PDO": "*",
+        "ext-curl":"*",
+        "mailgun/mailgun-php": "^3.0",
+        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/message": "^1.8",
+        "guzzlehttp/psr7": "^1.6",
+        "psr/log": "^1.1",
+        "php-http/curl-client": "^2.1",
+        "slim/slim": "4.*",
+        "php-http/cache-plugin": "^1.6",
+        "php-http/logger-plugin": "^1.1",
+        "php-http/stopwatch-plugin": "^1.2",
+        "laminas/laminas-httphandlerrunner": "^1.1",
+        "laminas/laminas-diactoros": "^2.2",
+        "slim/psr7": "^1.0",
+        "php-di/php-di": "^6.1",
+        "opis/closure": "^3.5",
+        "twig/twig": "^3.0",
+        "socketlabs/email-delivery": "^1.1"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Portfolio\\App\\" : "App/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}

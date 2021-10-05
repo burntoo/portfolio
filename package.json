@@ -1,0 +1,26 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "Portfolio Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:sass": "node-sass public/sass/main.scss public/css/style.css -w",
+    "devserver": "live-server",
+    "start": "yarn devserver & yarn watch:sass",
+    "compile:sass": "node-sass public/sass/main.scss public/css/style.comp.css",
+    "concat:css": "concat -o public/css/style.concat.css public/css/style.comp.css",
+    "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' public/css/style.concat.css -o public/css/style.prefix.css",
+    "compress:css": "node-sass public/css/style.prefix.css public/css/style.css --output-style compressed",
+    "build:css": "yarn compile:sass && yarn concat:css && yarn prefix:css && yarn compress:css"
+  },
+  "author": "Martin Nganga",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "concat": "^1.0.3",
+    "node-sass": "^6.0.0",
+    "postcss-cli": "^7.1.2"
+  },
+  "packageManager": "yarn@3.0.0"
+}

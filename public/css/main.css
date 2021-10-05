@@ -1,0 +1,92 @@
+.main-color{
+    background-color: #00000a;
+}
+.a-resume{
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    padding: 0.75rem 2.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.fs-60{
+    font-size: 60px;
+}
+.fs-40{
+    font-size: 40px;
+}
+.dude{
+    height: 310px;
+    width: 310px;
+    background-size: contain;
+    object-fit: contain;
+    background-image: url('../img/martin.jpg');
+    border-radius: 10px;
+}
+
+.photoshop{
+    height: 310px;
+    width: auto;
+    background-size: contain;
+    object-fit: contain;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.img-div{
+    height: 330px;
+    width: 330px;
+    border: 2px solid #ff0000;
+}
+
+ul{
+    list-style: outside none none;
+}
+
+ul li{
+    position: relative;
+    padding-left: 30px;
+}
+
+ul li::before{
+    content: "▹";
+    position: absolute;
+left: 0px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.input-contact{
+    border: 0;
+    background: transparent;
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff;
+}
+
+.feather {
+    fill: none;
+    width: 40px;
+    height: 40px;
+}
+
+.title{
+    -moz-box-align: center;
+    margin: 10px 0px 40px;
+}
+
+.title::after {
+    content: "";
+    display: block;
+    position: relative;
+    width: 250px;
+    height: 1px;
+    margin-left: 20px;
+    background-color: #ffffff;
+}
+
+.portfolio-div{
+    box-shadow:  0 1px 2px 0 rgba(255, 255, 255, 0.2), 0 3px 10px 0 rgba(255, 238, 238, 0.19);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    background-color: #0f0f11;
+}

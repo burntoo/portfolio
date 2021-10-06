@@ -180,19 +180,21 @@
                 <div class="col-12 text-white">
                     <p class="fs-40 text-center fw-bold">Send me a message!</p>
                     <p class="text-center">Got a question or just want to say hello? Go ahead.</p>
-                    <form class="w-100 p-5">
+                    <form class="w-100 p-5" id="send-message" method="POST">
                         <div class="row">
                             <div class="co-xs-12 col-md-6">
                                 <div class="input-group d-flex position-relative flex-column w-100 p-3">
                                     <label for="full-name" class="form-label">Full Names</label>
                                     <input type="email" class="input-contact" id="full-name"
                                         aria-describedby="emailHelp" />
+                                        <small id="error-full-name" class="error"></small>
                                 </div>
                             </div>
                             <div class="co-xs-12 col-md-6">
                                 <div class="input-group d-flex position-relative flex-column w-100 p-3">
                                     <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="input-contact" id="email" aria-describedby="emailHelp" />
+                                    <input type="email" class="input-contact" id="user-email" aria-describedby="emailHelp" />
+                                    <small id="error-user-email" class="error"></small>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -200,7 +202,13 @@
                                     <label for="text-message" class="form-label">Message</label>
                                     <textarea type="text" class="input-contact" id="text-message"
                                         aria-describedby="emailHelp"></textarea>
+                                        <small id="error-text-message" class="error"></small>
                                 </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-center">
+                                <button type="submit" class="col-md-2 my-3 my-md-0 py-2 rounded-3 btn text-white poppins-b submit-btn" name="send-message">
+                                    <div id="spinner-msg" class="spinner-border spinner-border-sm text-light" role="status"></div>
+                                    <i id="icon-lightning" class="pe-2 bi bi-lightning-charge-fill"></i>Send Message</button>
                             </div>
                         </div>
 
@@ -220,6 +228,97 @@
         </section>
     </main>
 <!-- Main Content HomePage Index End -->
+
+<script>
+    $(document).ready(function(){
+        $('#spinner-msg').hide();
+    //send message form
+    $("#send-message").submit(function(e) {
+        e.preventDefault();
+        message();
+    });
+});
+
+function message(){
+    var name = $('#full-name').val();
+    var email = $('#user-email').val();
+    var message = $('#text-message').val();
+
+    $('#error-full-name,  #error-user-email, #error-text-message').html(" ");
+    $('#full-name, #user-email, #text-message').removeAttr('style');
+
+    if(name != '' && email != '0' && message != ''){
+
+        $('#spinner-msg').show();
+
+        $.ajax({
+            method: "POST",
+            url: "/otl/contact/msg",
+            data: {
+                name: name,
+                email: email,
+                message: message
+            },
+            success: function(data){
+                data = $.parseJSON(data);
+
+                console.log(data)
+
+                if(data.success == 0){
+                    if(data.name_err == "error-name"){
+                        $('#error-name-service').html("*Enter first name");
+                        $('#name-service').css({"border": "3px solid red"});
+                    }
+                    if(data.email_err == "error-email"){
+                        $('#error-email-service').html("*Enter an email address");
+                        $('#email-service').css({"border": "3px solid red"})
+                    }
+                    if(data.message_err == "error-message"){
+                        $('#error-services').html("*Enter your message");
+                        $('#otl-services').css({"border": "3px solid red"})
+                    }
+                    $('#spinner-msg').hide();
+                }
+                else if(data.success == 1){
+
+                    $('#send-firstname, #send-last, #send-phone, #send-email, #send-msg').val('');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Your message has been sent you will be contacted in the shortest time possible. \n Thank You!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    $('#spinner-msg').hide();
+                }
+            },
+            complete: function(data){
+            //console.log(data)
+            $('#spinner-msg').hide();
+            },
+            error: function(xhr, status, error) {
+                console.log("XMLHttpRequest: "+xhr+"\nStatus: "+status+"\nRequest Error: "+error);
+                console.log(data)
+                $('#spinner-msg').hide();
+            }
+        });
+
+    }
+    else{
+        if(name == ''){
+            $('#error-full-name').html("*Enter your full name");
+        }
+        if(email == ''){
+            $('#error-user-email').html("*Enter an email address");
+        }
+        if(message == ''){
+            $('#error-text-message').html("*Enter your message");
+        }
+    }
+}
+</script>
 
 <!-- template Footer -->
 <?php require APP_ROOT . '/Views/includes/footer.php';?>

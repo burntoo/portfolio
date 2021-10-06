@@ -7,6 +7,7 @@
     <link href="assets/css/main.css" rel="stylesheet" />
     <link href="<?php echo URL_ROOT; ?>/css/bootstrap.min.css" rel="stylesheet" />
     <link href="<?php echo URL_ROOT; ?>/css/main.css" rel="stylesheet" />
+    <script src="<?php echo URL_ROOT; ?>/js/jquery-3.6.0.slim.min.js"></script>
     <title>Martin Nganga Njoroge</title>
 </head>
 <body>

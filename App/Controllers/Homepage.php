@@ -3,12 +3,16 @@ namespace Portfolio\App\Controllers;
 
 use Portfolio\App\Libraries\Controller;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 class Homepage extends Controller{
 
+    private $mail;
 
     public function __construct(){
-        
+        //$this->mail = new \Portfolio\App\Mail\Mail;
     }
 
     public function index(){
@@ -53,7 +57,9 @@ class Homepage extends Controller{
             }
             else{
                 //send mail
-                $this->mail->send('example@gmail.com', 'info@example.com', 'Website Message', '<p style="font-size: 15px;"><b>New Message From:</b><p><br/><b>Full Name:</b> '.$data['name'].'<br/><b>Email:</b> '.$data['email'].', <br/><b>Message:</b> '.$data['message'], 'New Website Message');
+                ## TODO: CHECK WHY MAIL MODEL IS NOT BEING LOADED
+                //$this->mail->send('triplepi39@gmail.com', 'ngangamartin11@gmail.com', 'Website Message', '<p style="font-size: 15px;"><b>New Message From:</b><p><br/><b>Full Name:</b> '.$data['name'].'<br/><b>Email:</b> '.$data['email'].', <br/><b>Message:</b> '.$data['message'], 'New Website Message');
+                $this->send('sendingemail@gmail.com', 'destinationexample@gmail.com', 'Website Message', '<p style="font-size: 15px;"><b>New Message From:</b><p><br/><b>Full Name:</b> '.$data['name'].'<br/><b>Email:</b> '.$data['email'].', <br/><b>Message:</b> '.$data['message'], 'New Website Message');
                 echo json_encode(["success" => 1, "message" => "message sent successfully"]);
             }
         }
@@ -69,15 +75,46 @@ class Homepage extends Controller{
         }
     }
 
-    private function isArrayEmpty($array) {
+    private static function send($from, $to, $subject, $html, $title)
+    {
         
-        foreach($array as $val) {
-            if (empty($val)){
-                return true;
-            }
-        }
-        return false;
-    }
+        $mail = new PHPMailer(true);
 
+        try {
+            //Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'sendingemail@gmail.com';                     //SMTP username
+            $mail->Password   = 'pass123456789';                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        
+            //Recipients
+            $mail->setFrom($from, $title);
+            $mail->addAddress($to, '');     //Add a recipient
+            // $mail->addAddress('ellen@example.com');               //Name is optional
+            // $mail->addReplyTo('info@example.com', 'Information');
+            // $mail->addCC('cc@example.com');
+            // $mail->addBCC('bcc@example.com');
+        
+            //Attachments
+            // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+        
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = $subject;
+            $mail->Body    = $html;
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            //return $mail->ErrorInfo;
+            return false;
+        }
+    }
 
 }

@@ -185,7 +185,7 @@
                             <div class="co-xs-12 col-md-6">
                                 <div class="input-group d-flex position-relative flex-column w-100 p-3">
                                     <label for="full-name" class="form-label">Full Names</label>
-                                    <input type="email" class="input-contact" id="full-name"
+                                    <input type="text" class="input-contact" id="full-name"
                                         aria-describedby="emailHelp" />
                                         <small id="error-full-name" class="error"></small>
                                 </div>
@@ -247,35 +247,31 @@ function message(){
     $('#error-full-name,  #error-user-email, #error-text-message').html(" ");
     $('#full-name, #user-email, #text-message').removeAttr('style');
 
-    if(name != '' && email != '0' && message != ''){
+    if(name != '' && email != '' && message != ''){
 
         $('#spinner-msg').show();
 
         $.ajax({
             method: "POST",
-            url: "/otl/contact/msg",
+            url: "/portfolio/homepage/sendMessage",
             data: {
                 name: name,
                 email: email,
                 message: message
             },
             success: function(data){
+                console.log(data);
                 data = $.parseJSON(data);
-
-                console.log(data)
 
                 if(data.success == 0){
                     if(data.name_err == "error-name"){
-                        $('#error-name-service').html("*Enter first name");
-                        $('#name-service').css({"border": "3px solid red"});
+                        $('#error-full-name').html("*Enter your full name");
                     }
                     if(data.email_err == "error-email"){
-                        $('#error-email-service').html("*Enter an email address");
-                        $('#email-service').css({"border": "3px solid red"})
+                        $('#error-user-email').html("*Enter your email address");
                     }
                     if(data.message_err == "error-message"){
-                        $('#error-services').html("*Enter your message");
-                        $('#otl-services').css({"border": "3px solid red"})
+                        $('#error-text-message').html("*Enter your message");
                     }
                     $('#spinner-msg').hide();
                 }
@@ -286,7 +282,7 @@ function message(){
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Your message has been sent you will be contacted in the shortest time possible. \n Thank You!',
+                        title: 'Your message has been sent i will reply in the shortest time possible \n Thank You!',
                         showConfirmButton: false,
                         timer: 3000
                     });

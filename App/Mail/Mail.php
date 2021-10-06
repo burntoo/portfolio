@@ -20,8 +20,8 @@ class Mail
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'infotemplate2021@gmail.com';                     //SMTP username
-            $mail->Password   = 'Portfolio12345';                               //SMTP password
+            $mail->Username   = 'example@gmail.com';                     //SMTP username
+            $mail->Password   = 'example';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
         
@@ -49,25 +49,5 @@ class Mail
             //return $mail->ErrorInfo;
             return false;
         }
-        
-        // // First, instantiate the SDK with your API credentials
-        // $mg = Mailgun::create(MAILGUN_API_KEY); // For US servers
-        // // $mg = Mailgun::create('key-example', 'https://api.eu.mailgun.net'); // For EU servers
-
-        // /**
-        //  * Create the Email Composition
-        //  */
-        // $params = array(
-        //     'from'    => $from,
-        //     'to'      => $to,
-        //     'subject' => $subject,
-        //     'html'    => $html
-        // );
-
-        // /**
-        //  * Sending Mail
-        //  * $mg->messages()->send($domain, $params);
-        //  */
-        // $mg->messages()->send(MAILGUN_DOMAIN, $params);
     }
 }
